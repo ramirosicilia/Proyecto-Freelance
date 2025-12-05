@@ -1,5 +1,6 @@
 .shift-container {
-  width: 480px;              /* MÁS GRANDE */
+  width: 680px;        
+  height: 500px;      /* MÁS GRANDE */
   margin: 60px auto;
 
   display: flex;
@@ -41,7 +42,7 @@
 }
 
 .input::placeholder {
-  color: #555;          /* placeholder visible */
+  color: #0c0c0c;          /* placeholder visible */
 }
 
 .input:focus {
