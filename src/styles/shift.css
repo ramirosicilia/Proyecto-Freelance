@@ -1,15 +1,15 @@
 .shift-container {
-  width: 680px;        
-  height: 600px;      /* MÁS GRANDE */
+  width: 480px;              /* MÁS GRANDE */
   margin: 60px auto;
 
   display: flex;
   flex-direction: column;
   gap: 18px;
- color: #0c0c0c;
-  background: rgba(94, 85, 177, 0.95);   /* más sólido, se ve mejor */
+
+  background: rgba(255, 255, 255, 0.95);   /* más sólido, se ve mejor */
   padding: 35px;
   border-radius: 16px;
+
   box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.25);
 
   border: 1px solid rgba(255, 255, 255, 0.4);
@@ -41,7 +41,7 @@
 }
 
 .input::placeholder {
-  color: #0c0c0c;          /* placeholder visible */
+  color: #555;          /* placeholder visible */
 }
 
 .input:focus {
@@ -54,7 +54,7 @@
   padding: 15px;
   margin-top: 8px;
   background: linear-gradient(90deg, #006eff, #00b7ff);
-  color: rgb(15, 15, 15);
+  color: white;
   border: none;
   border-radius: 12px;
   cursor: pointer;
@@ -66,4 +66,9 @@
 .button:hover {
   background: linear-gradient(90deg, #0057d4, #0096d4);
   transform: scale(1.03);
+}
+
+label, input::placeholder{ 
+    color: #111;
+
 }
