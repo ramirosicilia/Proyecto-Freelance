@@ -1,12 +1,12 @@
 .shift-container {
   width: 480px;              /* MÁS GRANDE */
   margin: 60px auto;
-  
+
   display: flex;
   flex-direction: column;
   gap: 18px;
 
-  background: #ffffffee;
+  background: rgba(255, 255, 255, 0.95);   /* más sólido, se ve mejor */
   padding: 35px;
   border-radius: 16px;
 
@@ -26,7 +26,7 @@
 .label {
   font-weight: 600;
   font-size: 16px;
-  color: #222;
+  color: #111;          /* MÁS OSCURO PARA QUE SE VEA */
 }
 
 .input {
@@ -36,6 +36,12 @@
   border: 1px solid #ccc;
   width: 100%;
   transition: 0.2s;
+  background: #fff;
+  color: #111;          /* texto visible */
+}
+
+.input::placeholder {
+  color: #555;          /* placeholder visible */
 }
 
 .input:focus {
