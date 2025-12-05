@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer, useEffect, useState } from "react";
 import "../styles/shift.css";
 
 // 👉 Ruta ficticia (vos la reemplazás por tu backend)
@@ -62,6 +62,7 @@ function listReducer(state, action) {
 export default function Shifts() {
   const [form, dispatchForm] = useReducer(formReducer, initialForm);
   const [turnos, dispatchList] = useReducer(listReducer, initialList);
+  const [showModal, setShowModal] = useState(false);
 
   // Horarios 9 a 22
   const horariosDisponibles = Array.from({ length: 14 }, (_, i) => {
@@ -204,38 +205,62 @@ export default function Shifts() {
         Reservar turno
       </button>
 
-      {/* LISTA DE TURNOS */}
-      <h3 className="shift-subtitle">Turnos Reservados</h3>
+      {/* Botón para abrir modal */}
+      <button className="button-secondary" onClick={() => setShowModal(true)}>
+        Ver Turnos Reservados
+      </button>
 
-      <ul className="shift-list">
-        {turnos.length === 0 && <p>No hay turnos cargados.</p>}
+      {/* MODAL PROFESIONAL */}
+      {showModal && (
+        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+          <div
+            className="modal-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="modal-title">Turnos Reservados</h3>
 
-        {turnos.map((t) => (
-          <li key={t.id} className="shift-item">
-            <span>
-              <strong>DNI:</strong> {t.dni} | <strong>Fecha:</strong> {t.fecha} |{" "}
-              <strong>Horario:</strong> {t.horario}
-            </span>
-
-            <button
-              className="btn-edit"
-              onClick={() =>
-                actualizarTurno(t.id, {
-                  dni: t.dni,
-                  fecha: t.fecha,
-                  horario: t.horario,
-                })
-              }
-            >
-              Editar
+            <button className="modal-close" onClick={() => setShowModal(false)}>
+              ✖
             </button>
 
-            <button className="btn-delete" onClick={() => borrarTurno(t.id)}>
-              Borrar
-            </button>
-          </li>
-        ))}
-      </ul>
+            <div className="modal-list">
+              {turnos.length === 0 && <p>No hay turnos cargados.</p>}
+
+              {turnos.map((t) => (
+                <div key={t.id} className="modal-item">
+                  <p>
+                    <strong>DNI:</strong> {t.dni} <br />
+                    <strong>Fecha:</strong> {t.fecha} <br />
+                    <strong>Horario:</strong> {t.horario}
+                  </p>
+
+                  <div className="modal-actions">
+                    <button
+                      className="btn-edit"
+                      onClick={() =>
+                        actualizarTurno(t.id, {
+                          dni: t.dni,
+                          fecha: t.fecha,
+                          horario: t.horario,
+                        })
+                      }
+                    >
+                      Editar
+                    </button>
+
+                    <button
+                      className="btn-delete"
+                      onClick={() => borrarTurno(t.id)}
+                    >
+                      Borrar
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
