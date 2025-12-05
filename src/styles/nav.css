@@ -1,0 +1,64 @@
+
+.nav-container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 2rem;
+    position: fixed;
+    top: 30px;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+a{
+    text-decoration: none;
+    color: azure;
+    font-weight: 500;
+    letter-spacing: .5px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+/* ------------------------- */
+/*   TABLET  (≤1024px)       */
+/* ------------------------- */
+@media (max-width: 1024px) {
+  .nav-container {
+    gap: 1.2rem;
+  }
+
+  .nav-container a {
+    font-size: 0.95rem;
+  }
+}
+
+/* ------------------------- */
+/*   MÓVIL MEDIANO (≤768px)  */
+/* ------------------------- */
+@media (max-width: 768px) {
+  .nav-container {
+    gap: 1rem;
+    padding: 0 .5rem;
+  }
+
+  .nav-container a {
+    font-size: 0.9rem;
+  }
+}
+
+/* ------------------------- */
+/*   MÓVIL CHICO (≤480px)    */
+/* ------------------------- */
+@media (max-width: 480px) {
+  .nav-container {
+    justify-content: center;
+    gap: 0.8rem;
+    top: 20px; /* más cerca del borde en móviles */
+  }
+
+  .nav-container a {
+    font-size: 0.8rem;
+    letter-spacing: 0.3px;
+  }
+}

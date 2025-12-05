@@ -1,0 +1,331 @@
+  :root{
+      --accent: #00a3ff;
+      --dark: #041826;
+      --card: rgba(255,255,255,0.04);
+      --glass: rgba(255,255,255,0.03);
+      --max-width: 1100px;
+      --radius: 14px;
+      --glass-border: rgba(255,255,255,0.06);
+    }
+
+    /* Reset mínimo */
+    *{box-sizing:border-box;margin:0;padding:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+
+    body{
+      background: linear-gradient(180deg,#071426 0%, #081828 60%);
+      color:#e9f6ff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+      padding:2rem;
+      display:flex;
+      justify-content:center;
+    }
+
+    .page{
+      width:100%;
+      max-width:var(--max-width);
+      margin:0 auto;
+    }
+
+    /* Hero */
+    .hero{
+      margin-top: 4rem;
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:2rem;
+      align-items:center;
+      margin-bottom:2rem;
+    }
+
+    /* Texto del hero */
+    .hero-content{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid var(--glass-border);
+      padding:2rem;
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .eyebrow{ color: #9fd8ff; font-weight:600; font-size:.9rem; margin-bottom:.6rem; display:inline-block; }
+    .hero-title{ font-size:2rem; font-weight:700; margin-bottom:.6rem; color:#fff; }
+    .hero-sub{ color:#d7eefc; opacity:.9; margin-bottom:1.25rem; }
+    .hero-cta{ display:flex; gap:0.8rem; flex-wrap:wrap; }
+    .btn{
+      background:var(--accent);
+      color:#032233;
+      padding:.8rem 1rem;
+      border-radius:10px;
+      font-weight:700;
+      text-decoration:none;
+      box-shadow: 0 6px 18px rgba(0,163,255,0.16);
+      transition:transform .14s ease, box-shadow .14s ease;
+    }
+    .btn.secondary{
+      background:transparent;
+      color:#aee8ff;
+      border:1px solid rgba(174,232,255,0.08);
+      box-shadow:none;
+    }
+    .btn:hover{ transform:translateY(-4px); box-shadow: 0 18px 40px rgba(0,163,255,0.14); }
+
+    /* Hero imagen (usa la ruta del archivo que subiste) */
+    .hero-media{
+      width:100%;
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .hero-media .banner{
+      width:100%;
+      max-width:420px;
+      height:240px;
+      border-radius:16px;
+      overflow:hidden;
+      border: 1px solid var(--glass-border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+    }
+    .hero-media img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transform: scale(1.02);
+    }
+
+    /* Servicios */
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(3,1fr);
+      gap:1rem;
+      margin-bottom:2rem;
+    }
+    .card{
+      background:var(--card);
+      border: 1px solid var(--glass-border);
+      padding:1.2rem;
+      border-radius:12px;
+      min-height:150px;
+      display:flex;
+      flex-direction:column;
+      gap:.6rem;
+    }
+    .card h3{ font-size:1.05rem; margin-bottom:.2rem; color:#eaffff; }
+    .card p{ color:#cfeffd; opacity:.85; font-size:.95rem; flex:1; }
+    .card .capabilities{ margin-top:.6rem; font-size:.85rem; color:#bfe8ff; opacity:.9; }
+
+    /* Proceso y confianza */
+    .two-col{
+      display:grid;
+      grid-template-columns: 1fr 320px;
+      gap:1rem;
+      margin-bottom:2rem;
+    }
+    .process{
+      padding:1rem;
+      background:var(--glass);
+      border-radius:12px;
+      border:1px solid var(--glass-border);
+    }
+    .process ol{ padding-left:1.1rem; color:#d7eefc; }
+    .process li{ margin-bottom:.6rem; }
+    .trust{
+      padding:1rem;
+      background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(255,255,255,0.01));
+      border-radius:12px;
+      border:1px solid var(--glass-border);
+    }
+
+    /* Paquetes / CTA final */
+    .cta{
+      display:flex;
+      gap:1rem;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:3rem;
+      padding:1rem;
+      background:linear-gradient(90deg, rgba(0,163,255,0.04), rgba(0,163,255,0.01));
+      border-radius:12px;
+      border:1px solid var(--glass-border);
+    } 
+
+
+    /* Página */
+.page {
+  width: 100%;
+}
+
+/* ----- HERO ----- */
+.urgent {
+  margin-top: 1rem;
+  font-size: .92rem;
+  color: #bfe8ff;
+}
+
+/* Títulos y subtítulos */
+.section-title {
+  margin-bottom: .8rem;
+  color: #dff8ff;
+}
+
+.process-title {
+  color: #dff8ff;
+  margin-bottom: .6rem;
+}
+
+.process-ref {
+  margin-top: .6rem;
+  color: #bfe8ff;
+}
+
+/* Lista de confianza */
+.trust-title {
+  margin-bottom: .6rem;
+  color: #dff8ff;
+}
+
+.trust-list {
+  color: #bfe8ff;
+  padding-left: 1rem;
+}
+
+.trust-testimonial {
+  margin-top: 1rem;
+}
+
+.testimonio-label {
+  color: #fff;
+}
+
+.testimonio-text {
+  margin-top: .5rem;
+  color: #d7eefc;
+  font-style: italic;
+}
+
+/* CTA */
+.cta-title {
+  margin-bottom: .4rem;
+  color: #eaffff;
+}
+
+.cta-sub {
+  opacity: .9;
+  color: #dff8ff;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: .6rem;
+  align-items: center;
+}
+
+
+
+@media (max-width: 1024px) {
+
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .hero-media {
+    order: -1;
+  }
+
+  .hero-media .banner {
+    height: 220px;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .cta {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .cta-buttons {
+    justify-content: center;
+  }
+}
+
+
+
+/* ===========================
+      📱 768px — Mobile grande
+=========================== */
+@media (max-width: 768px) {
+
+  body {
+    padding: 1.5rem;
+  }
+
+  .hero-title {
+    font-size: 1.7rem;
+  }
+
+  .hero-content {
+    padding: 1.5rem;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-media .banner {
+    height: 200px;
+  }
+
+  .cta {
+    gap: 1.2rem;
+  }
+}
+
+
+
+/* ===========================
+      📱 480px — Mobile chico
+=========================== */
+@media (max-width: 480px) {
+
+  body {
+    padding: 1rem;
+  }
+
+  .hero-title {
+    font-size: 1.45rem;
+  }
+
+  .hero-sub {
+    font-size: .9rem;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero-media .banner {
+    height: 170px;
+  }
+
+  .cta {
+    padding: .8rem;
+    border-radius: 10px;
+  }
+
+  .cta-title {
+    font-size: 1rem;
+  }
+
+  .cta-sub {
+    font-size: .85rem;
+  }
+}

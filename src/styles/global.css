@@ -1,0 +1,42 @@
+body{
+    width: 90%;
+    max-width: 80%;
+    margin: 0 auto;
+    background: radial-gradient(circle at 20% 20%,
+    #141625 0%,
+    #0a0b10 70%,
+    #050608 100%);
+    color: aliceblue;
+  
+} 
+
+
+
+
+/* ------------------------- */
+/*   TABLET  (≤1024px)       */
+/* ------------------------- */
+@media (max-width: 1024px) {
+  body {
+    width: 96%;
+  }
+}
+
+/* ------------------------- */
+/*   MÓVIL MEDIANO (≤768px)  */
+/* ------------------------- */
+@media (max-width: 768px) {
+  body {
+    width: 97%;
+  }
+}
+
+/* ------------------------- */
+/*   MÓVIL CHICO (≤480px)    */
+/* ------------------------- */
+@media (max-width: 480px) {
+  body {
+    width: 98%;
+    padding: 0 .3rem; /* un leve respiro en móviles */
+  }
+}

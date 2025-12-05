@@ -1,0 +1,154 @@
+.projects-section {
+  min-height: 100vh;
+  padding: 120px 8%;
+  background: linear-gradient(135deg, #050b1f, #0b122f);
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+  margin-top: 3rem;
+}
+
+.projects-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.projects-subtitle {
+  color: #5ea3ff;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+.projects-title {
+  margin-top: 15px;
+  font-size: 42px;
+  font-weight: 800;
+  min-height: 60px;
+  background: linear-gradient(90deg, #7aa2ff, #3cffd0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.projects-description {
+  max-width: 700px;
+  margin-top: 20px;
+  opacity: 0.75;
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+.projects-grid {
+  margin-top: 70px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+}
+
+.project-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 22px;
+  overflow: hidden;
+  text-decoration: none;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.4s ease;
+  position: relative;
+}
+
+.project-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent, rgba(72, 149, 255, 0.2), transparent);
+  opacity: 0;
+  transition: 0.4s;
+}
+
+.project-card:hover::before {
+  opacity: 1;
+}
+
+.project-card:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+}
+
+.project-image {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  filter: grayscale(25%);
+  transition: 0.4s;
+}
+
+.project-card:hover .project-image {
+  filter: grayscale(0%);
+  transform: scale(1.1);
+}
+
+.project-content {
+  padding: 26px;
+}
+
+.project-content h3 {
+  font-size: 22px;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.project-content p {
+  font-size: 14px;
+  opacity: 0.8;
+  line-height: 1.7;
+}
+
+/* ---- Botón -> Estético, enfocado en Ventas ---- */
+
+.project-button {
+  margin-top: 16px;
+  background: linear-gradient(135deg, #59a0ff, #3cffd0);
+  border: none;
+  border-radius: 30px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #02071a;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.project-button:hover {
+  transform: translateX(8px);
+  box-shadow: 0 0 25px rgba(60, 255, 208, 0.8);
+}
+
+/* ---- RESPONSIVE ---- */
+
+@media (max-width: 1024px) {
+  .projects-section {
+    padding: 90px 5%;
+  }
+}
+
+@media (max-width: 768px) {
+  .projects-title {
+    font-size: 32px;
+  }
+
+  .projects-description {
+    font-size: 14px;
+  }
+
+  .project-button {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 500px) {
+  .project-image {
+    height: 170px;
+  }
+}

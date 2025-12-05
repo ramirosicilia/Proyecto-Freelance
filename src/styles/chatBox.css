@@ -1,0 +1,406 @@
+/* --------------------------- */
+/* TU CSS ORIGINAL (NO TOCADO) */
+/* --------------------------- */
+
+/* CONTENEDOR GENERAL */
+/* ============================
+   CONTENEDOR GENERAL
+============================ */
+.chat-container {
+  width: 100%;
+  height: 550px;
+  background: #0b1220;
+  border: 1px solid #1e293b;
+  border-radius: 14px;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.35);
+  margin: auto;
+  color: white;
+
+}
+
+
+/* ============================
+   SIDEBAR IZQUIERDA
+============================ */
+.sidebar {
+  width: 50%;
+  background: #111827;
+  border-right: 1px solid #1f2937;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.usuario-info {
+  background: #1f2937;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  text-align: center;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.25);
+}
+
+.usuario-info button {
+  margin-top: 8px;
+  padding: 6px 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  background: #0ea5e9;
+  color: white;
+  cursor: pointer;
+}
+.usuario-info button:hover {
+  background: #0284c7;
+}
+
+
+/* Conversaciones */
+.conv-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.conv-header button {
+  padding: 4px 8px;
+  background: #10b981;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+.conv-header button:hover {
+  background: #059669;
+}
+
+.sidebar ul {
+  padding: 0;
+  margin: 0;
+}
+.sidebar li {
+  list-style: none;
+  margin-bottom: 8px;
+}
+
+.sidebar li button {
+  width: 100%;
+  padding: 10px;
+  background: #1f2937;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  color: white;
+  transition: 0.2s;
+}
+.sidebar li button:hover {
+  background: #374151;
+}
+.sidebar li button.activo {
+  background: #10b981 !important;
+  color: #082f26;
+  font-weight: bold;
+  border: 1px solid #059669;
+}
+
+.conv-botones {
+  margin-top: 15px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.conv-botones button {
+  padding: 6px 8px;
+  background: #ef4444;
+  border-radius: 6px;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.conv-botones button:hover {
+  background: #dc2626;
+}
+
+
+/* ============================
+   AREA DEL CHAT
+============================ */
+.chat-area {
+  width: 66%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  background: #0f172a;
+}
+
+.chat-header {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  color: #93c5fd;
+}
+
+
+/* ============================
+   MENSAJES
+============================ */
+.chat-mensajes {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.chat-msg {
+  background: #1e293b;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  width: fit-content;
+  max-width: 90%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+}
+
+.chat-msg.otro {
+  border-left: 4px solid #60a5fa;
+}
+
+.chat-msg.propio {
+  margin-left: auto;
+  background: #059669;
+  border-right: 4px solid #34d399;
+}
+
+.nombre {
+  font-weight: bold;
+  color: #93c5fd;
+}
+
+.hora {
+  font-size: 12px;
+  color: #7dd3fc;
+}
+
+
+/* ============================
+   FORMULARIO MENSAJE
+============================ */
+.chat-form {
+  margin-top: 10px;
+  display: flex;
+  gap: 0.5rem;
+  position: relative;
+  background: #1e293b;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.chat-form input {
+  flex: 1;
+  padding: 0.6rem;
+  border-radius: 8px;
+  background: #0f172a;
+  border: 1px solid #334155;
+  color: white;
+}
+
+.chat-form button {
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+/* Enviar */
+.chat-form button[type="submit"] {
+  background: #10b981;
+}
+.chat-form button[type="submit"]:hover {
+  background: #059669;
+}
+
+/* Emoji */
+.emoji-btn {
+  background: #3b82f6;
+}
+.emoji-btn:hover {
+  background: #2563eb;
+}
+
+/* Audio */
+.audio-btn {
+  background: #8b5cf6;
+}
+.audio-btn:hover {
+  background: #7c3aed;
+}
+
+/* Audio grabando */
+.audio-btn-grabando {
+  background: #dc2626;
+}
+.audio-btn-grabando:hover {
+  background: #b91c1c;
+}
+
+
+/* ============================
+   EMOJI PICKER
+============================ */
+.emoji-picker {
+  position: absolute;
+  bottom: 60px;
+  left: 10px;
+  z-index: 999;
+  background: #1e293b;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+}
+
+
+
+.audio-btn,
+.audio-btn-grabando {
+  width: 42px;
+  text-align: center;
+}
+
+
+
+/* ==================================
+    768px – 1023px (Tablet)
+================================== */
+/* ===========================
+     MÓVIL → UNA SOLA COLUMNA
+=========================== */
+@media (max-width: 1023px) { 
+
+   .chat-form{
+    flex-wrap: wrap !important;
+  }
+
+
+  .chat-container {
+    width: 100% !important;
+    flex-direction: column !important;
+    height: auto;
+  }
+
+  .sidebar {
+    width: 100% !important;
+    border-right: none;
+    margin-bottom: 1rem;
+  }
+
+  .chat-area {
+    width: 100% !important;
+  } 
+
+  .chat-msg {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .chat-msg audio {
+    width: 100% !important;
+  }
+}
+
+
+
+/* ==================================
+    480px – 767px (Móvil grande)
+================================== */
+@media (max-width: 767px) and (min-width: 480px) { 
+
+  .chat-container {
+    max-width: 100%;
+    display: flex;
+    height: auto;
+    padding: .6rem;
+  }  
+
+  
+
+  
+   input{
+    width: 70%;
+   } 
+
+  .sidebar{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+
+  .chat-mensajes {
+    height: auto;
+    overflow-y: auto;
+  }
+
+  .chat-msg {
+    font-size: 14px;
+  } 
+
+ 
+  .chat-form input {
+    padding: .45rem;
+  }
+
+  .chat-form button {
+    padding: .45rem .8rem;
+    font-size: 14px;
+  }
+
+  .emoji-picker {
+    bottom: 55px;
+  }
+}
+
+
+/* ===========================
+  max-width 479px — Móvil chico
+=========================== */
+@media (max-width: 479px) {
+  .chat-container {
+    max-width: 100%;
+    height: auto;
+    padding: .5rem;
+  }
+
+  .chat-mensajes {
+    height: auto;
+    overflow-y: auto;
+  }
+
+  .chat-msg {
+    font-size: 13px;
+    padding: .35rem;
+  }
+
+  .chat-form {
+    gap: .35rem;
+  }
+
+  .chat-form input {
+    padding: .4rem;
+    font-size: 14px;
+  }
+
+  .chat-form button {
+    padding: .4rem .7rem;
+    font-size: 13px;
+  }
+
+  .emoji-picker {
+    bottom: 48px;
+  }
+}
