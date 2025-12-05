@@ -1,68 +1,172 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect } from "react";
 import "../styles/shift.css";
 
-const initialState = {
+// 👉 Ruta ficticia (vos la reemplazás por tu backend)
+const API = "https://api.mi-clinica.com/turnos";
+
+// -----------------------------
+// ESTADO INICIAL
+// -----------------------------
+const initialForm = {
   dni: "",
   fecha: "",
   horario: "",
 };
 
-function reducer(state, action) {
+const initialList = [];
+
+// -----------------------------
+// REDUCER PARA FORMULARIO
+// -----------------------------
+function formReducer(state, action) {
   switch (action.type) {
     case "SET_DNI":
       return { ...state, dni: action.value };
-
     case "SET_FECHA":
       return { ...state, fecha: action.value };
-
     case "SET_HORARIO":
       return { ...state, horario: action.value };
-
     case "RESET":
-      return initialState;
+      return initialForm;
+    default:
+      return state;
+  }
+}
+
+// -----------------------------
+// REDUCER PARA LISTA DE TURNOS
+// -----------------------------
+function listReducer(state, action) {
+  switch (action.type) {
+    case "SET_LIST":
+      return action.payload;
+
+    case "ADD":
+      return [...state, action.payload];
+
+    case "UPDATE":
+      return state.map((t) =>
+        t.id === action.payload.id ? action.payload : t
+      );
+
+    case "DELETE":
+      return state.filter((t) => t.id !== action.payload);
 
     default:
       return state;
   }
 }
 
+// -------------------------------------------------------
+
 export default function Shifts() {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [form, dispatchForm] = useReducer(formReducer, initialForm);
+  const [turnos, dispatchList] = useReducer(listReducer, initialList);
 
-  const horariosDisponibles = [
-    "09:00",
-    "10:00",
-    "11:00",
-    "12:00",
-    "13:00",
-    "14:00",
-    "15:00",
-  ];
+  // Horarios 9 a 22
+  const horariosDisponibles = Array.from({ length: 14 }, (_, i) => {
+    const h = 9 + i;
+    return `${h.toString().padStart(2, "0")}:00`;
+  });
 
-  const reservarTurno = () => {
-    if (!state.dni || !state.fecha || !state.horario) {
+  // -------------------------------------------------------
+  // CARGAR TURNOS (GET)
+  // -------------------------------------------------------
+  const fetchTurnos = async () => {
+    try {
+      const res = await fetch(API);
+      const data = await res.json();
+      dispatchList({ type: "SET_LIST", payload: data });
+    } catch (err) {
+      console.error("❌ Error al cargar turnos:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchTurnos();
+  }, []);
+
+  // -------------------------------------------------------
+  // CREAR TURNO (POST)
+  // -------------------------------------------------------
+  const reservarTurno = async () => {
+    if (!form.dni || !form.fecha || !form.horario) {
       alert("Completa todos los campos.");
       return;
     }
 
-    alert(
-      `Turno reservado:\n\nDNI: ${state.dni}\nFecha: ${state.fecha}\nHorario: ${state.horario}`
-    );
+    const payload = { ...form };
 
-    dispatch({ type: "RESET" });
+    try {
+      const res = await fetch(API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const newTurno = await res.json();
+
+      dispatchList({ type: "ADD", payload: newTurno });
+      dispatchForm({ type: "RESET" });
+
+      alert("Turno reservado con éxito");
+    } catch (err) {
+      console.error("❌ Error en POST:", err);
+    }
   };
 
+  // -------------------------------------------------------
+  // ACTUALIZAR TURNO (PUT)
+  // -------------------------------------------------------
+  const actualizarTurno = async (id, payload) => {
+    try {
+      const res = await fetch(`${API}/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) throw new Error("Error al actualizar turno");
+
+      const updated = await res.json();
+
+      dispatchList({ type: "UPDATE", payload: updated });
+    } catch (err) {
+      console.error("❌ Error actualizando:", err);
+    }
+  };
+
+  // -------------------------------------------------------
+  // BORRAR TURNO (DELETE)
+  // -------------------------------------------------------
+  const borrarTurno = async (id) => {
+    try {
+      const res = await fetch(`${API}/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) throw new Error("Error al borrar turno");
+
+      dispatchList({ type: "DELETE", payload: id });
+    } catch (err) {
+      console.error("❌ Error en DELETE:", err);
+    }
+  };
+
+  // -------------------------------------------------------
+  // RENDER
+  // -------------------------------------------------------
   return (
     <div className="shift-container">
-      <h2 className="shift-title">Reservar Turno</h2>
+      <h2 className="shift-title">Sistema de Turnos</h2>
 
       {/* DNI */}
       <label className="label">DNI:</label>
       <input
         type="number"
-        value={state.dni}
+        value={form.dni}
         onChange={(e) =>
-          dispatch({ type: "SET_DNI", value: e.target.value })
+          dispatchForm({ type: "SET_DNI", value: e.target.value })
         }
         className="input"
         placeholder="Ingresa DNI"
@@ -72,9 +176,9 @@ export default function Shifts() {
       <label className="label">Fecha:</label>
       <input
         type="date"
-        value={state.fecha}
+        value={form.fecha}
         onChange={(e) =>
-          dispatch({ type: "SET_FECHA", value: e.target.value })
+          dispatchForm({ type: "SET_FECHA", value: e.target.value })
         }
         className="input"
       />
@@ -82,9 +186,9 @@ export default function Shifts() {
       {/* Horario */}
       <label className="label">Horario:</label>
       <select
-        value={state.horario}
+        value={form.horario}
         onChange={(e) =>
-          dispatch({ type: "SET_HORARIO", value: e.target.value })
+          dispatchForm({ type: "SET_HORARIO", value: e.target.value })
         }
         className="input"
       >
@@ -99,6 +203,39 @@ export default function Shifts() {
       <button className="button" onClick={reservarTurno}>
         Reservar turno
       </button>
+
+      {/* LISTA DE TURNOS */}
+      <h3 className="shift-subtitle">Turnos Reservados</h3>
+
+      <ul className="shift-list">
+        {turnos.length === 0 && <p>No hay turnos cargados.</p>}
+
+        {turnos.map((t) => (
+          <li key={t.id} className="shift-item">
+            <span>
+              <strong>DNI:</strong> {t.dni} | <strong>Fecha:</strong> {t.fecha} |{" "}
+              <strong>Horario:</strong> {t.horario}
+            </span>
+
+            <button
+              className="btn-edit"
+              onClick={() =>
+                actualizarTurno(t.id, {
+                  dni: t.dni,
+                  fecha: t.fecha,
+                  horario: t.horario,
+                })
+              }
+            >
+              Editar
+            </button>
+
+            <button className="btn-delete" onClick={() => borrarTurno(t.id)}>
+              Borrar
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
