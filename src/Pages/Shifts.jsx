@@ -186,14 +186,14 @@ export default function Shifts() {
 
       {/* Horario */}
       <label className="label">Horario:</label>
-      <select 
+      <select
         value={form.horario}
         onChange={(e) =>
           dispatchForm({ type: "SET_HORARIO", value: e.target.value })
         }
         className="input"
       >
-        <option className="option" value="">Seleccionar horario</option>
+        <option value="">Seleccionar horario</option>
         {horariosDisponibles.map((h) => (
           <option key={h} value={h}>
             {h}

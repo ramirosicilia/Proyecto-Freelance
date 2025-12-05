@@ -8,9 +8,9 @@
   padding: 35px;
   border-radius: 16px;
   box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.25);
+
   border: 1px solid rgba(255, 255, 255, 0.4);
 }
-
 
 .shift-title {
   text-align: center;
@@ -39,11 +39,10 @@
 
 .option{
     color: #111;
-} 
-
+}
 
 .input::placeholder {
-  color: #cc0c0c;          /* placeholder visible */
+  color: #555;          /* placeholder visible */
 }
 
 .input:focus {
