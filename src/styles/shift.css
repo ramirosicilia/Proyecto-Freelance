@@ -32,8 +32,8 @@
   border: 1px solid #ccc;
   width: 100%;
   transition: 0.2s;
-  background: #000000;
-  color: #e0d6d6;          /* texto visible */
+  background: transparent !important;
+  color: #000000 !important;          /* texto visible */
 } 
 
 .option{
