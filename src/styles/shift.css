@@ -69,7 +69,3 @@
   transform: scale(1.03);
 }
 
-label, input::placeholder{ 
-    color: #111;
-
-}
