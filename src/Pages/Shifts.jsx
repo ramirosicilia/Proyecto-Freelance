@@ -190,7 +190,7 @@ export default function Shifts() {
         onChange={(e) =>
           dispatchForm({ type: "SET_HORARIO", value: e.target.value })
         }
-        className="input"
+        className="input_turnos"
       >
         <option value="">Seleccionar horario</option>
         {horariosDisponibles.map((h) => (
