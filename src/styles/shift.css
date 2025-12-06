@@ -41,7 +41,7 @@
 }
 
 .input::placeholder {
-  color: #000000 !important;          /* placeholder visible */
+  color: #ffffff !important;          /* placeholder visible */
 }
 
 .input:focus {
