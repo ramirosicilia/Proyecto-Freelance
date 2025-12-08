@@ -66,7 +66,7 @@ function listReducer(state, action) {
 const REGEX = {
   dni: /^[0-9]{7,10}$/,
   nombre: /^[A-Za-zÁÉÍÓÚÑáéíóúñ ]{3,40}$/,
-  telefono: /^[+()0-9\s-]{6,20}$/,
+  telefono: /^[+()0-9\s-]{6,40}$/,
   email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
 };
 
