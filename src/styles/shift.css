@@ -122,13 +122,13 @@
 /* ----------------------------- */
 label {
   font-weight: 600;
-  font-size: 15px;
+  font-size: 13px;
   color: #ffffff;
 }
 
 input,
 select {
-  padding: 12px;
+  padding: 7px;
   font-size: 16px;
   border-radius: 10px;
   border: 1px solid #666;
@@ -150,7 +150,7 @@ select:focus {
 }
 
 select option {
-  color: #111;
+  color: #ffffff;
   font-weight: 600;
 }
 
@@ -180,7 +180,10 @@ select option {
 /* ----------------------------- */
 .modal-overlay {
   position: fixed;
-  inset: 0;
+   top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
   background: rgba(0,0,0,0.65);
   display: flex;
   justify-content: center;
@@ -192,14 +195,19 @@ select option {
   background: #111a29;
   padding: 25px;
   width: 420px;
+  height: auto;
   border-radius: 14px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  justify-content: center;
+  align-items: start;
+  gap: 10px;
   box-shadow: 0 0 20px rgba(0,0,0,0.35);
   border: 1px solid rgba(255,255,255,0.15);
   animation: fade .2s ease-out;
 }
+
+  
 
 .modal-box h3 {
   color: #ffffff;
@@ -221,7 +229,7 @@ select option {
   background: #18A558;
   color: white;
   border: none;
-  padding: 10px 18px;
+  padding: 8px 18px;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
@@ -236,7 +244,7 @@ select option {
   background: #d33;
   color: white;
   border: none;
-  padding: 10px 18px;
+  padding: 8px 18px;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
@@ -251,4 +259,91 @@ select option {
 @keyframes fade {
   from { opacity: 0; transform: scale(.9); }
   to   { opacity: 1; transform: scale(1); }
+} 
+
+
+@media (max-width: 1199px) {
+  .shift-container {
+    width: 480px;
+  }
+  .modal-box {
+    width: 430px;
+  }
+}
+
+/* ----------------------------- */
+/* 768px → 991px (MD) - Tablets */
+/* ----------------------------- */
+@media (max-width: 991px) {
+  .shift-container {
+    width: 420px;
+    padding: 28px;
+  }
+
+  .shift-title {
+    font-size: 1.7rem;
+  }
+
+  .modal-box {
+    width: 380px;
+  }
+}
+
+/* ----------------------------- */
+/* 576px → 767px (SM) - Celulares grandes */
+/* ----------------------------- */
+@media (max-width: 767px) {
+  .shift-container {
+    width: 90%;
+    margin: 40px auto;
+    padding: 25px;
+  }
+
+  .shift-item {
+    padding: 12px 15px;
+  }
+
+  .modal-box {
+    width: 85%;
+    padding: 18px;
+  }
+}
+
+/* ----------------------------- */
+/* ≤575px (XS) - Celulares chicos */
+/* ----------------------------- */
+@media (max-width: 575px) {
+  .shift-container {
+    width: 92%;
+    padding: 20px;
+    gap: 14px;
+  }
+
+  .shift-title {
+    font-size: 1.5rem;
+  }
+
+  .shift-data {
+    grid-template-columns: 1fr; /* LOS DATOS EN UNA SOLA COLUMNA */
+  }
+
+  .modal-box {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .button {
+    font-size: 16px;
+    padding: 13px;
+  }
+
+  input,
+  select {
+    font-size: 15px;
+  }
+
+  .shift-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }

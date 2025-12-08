@@ -289,7 +289,7 @@ export default function Shifts() {
       {openModal && (
         <div className="modal-overlay">
           <div className="modal-box">
-            <h3>{modo === "add" ? "Nuevo Turno" : "Editar Turno"}</h3>
+            <h3 style={{fontSize:"20px"}}>{modo === "add" ? "Nuevo Turno" : "Editar Turno"}</h3>
 
             <label>DNI:</label>
             <input
