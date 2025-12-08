@@ -1,31 +1,46 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer, useEffect, useState } from "react";
 import "../styles/shift.css";
 
-// 👉 Ruta ficticia (vos la reemplazás por tu backend)
-const API = "https://api.mi-clinica.com/turnos";
 
+
+
+
+const URLBackendTurnos = import.meta.env.VITE_URL_BACKEND_TURNOS;
+// ENDPOINTS
+/*const API = {
+  ciudadanos: "http://localhost:7900/ciudadanos" ,
+  turnos: "http://localhost:7900/turnos",
+  reservas: "http://localhost:7900/reservas",
+};*/ 
+
+const API = {
+  ciudadanos: `${URLBackendTurnos}/ciudadanos` ,
+  turnos:`${URLBackendTurnos}/turnos`,
+  reservas:`${URLBackendTurnos}/reservas`,
+
+}
 // -----------------------------
-// ESTADO INICIAL
+// ESTADO INICIAL DEL FORM
 // -----------------------------
 const initialForm = {
+  id: null,
   dni: "",
+  nombre: "",
+  telefono: "",
+  email: "",
   fecha: "",
   horario: "",
 };
 
-const initialList = [];
-
 // -----------------------------
-// REDUCER PARA FORMULARIO
+// REDUCER DEL FORM
 // -----------------------------
 function formReducer(state, action) {
   switch (action.type) {
-    case "SET_DNI":
-      return { ...state, dni: action.value };
-    case "SET_FECHA":
-      return { ...state, fecha: action.value };
-    case "SET_HORARIO":
-      return { ...state, horario: action.value };
+    case "SET":
+      return { ...state, [action.field]: action.value };
+    case "LOAD":
+      return action.data;
     case "RESET":
       return initialForm;
     default:
@@ -34,204 +49,349 @@ function formReducer(state, action) {
 }
 
 // -----------------------------
-// REDUCER PARA LISTA DE TURNOS
+// REDUCER LISTA
 // -----------------------------
 function listReducer(state, action) {
   switch (action.type) {
     case "SET_LIST":
       return action.payload;
-
-    case "ADD":
-      return [...state, action.payload];
-
-    case "UPDATE":
-      return state.map((t) =>
-        t.id === action.payload.id ? action.payload : t
-      );
-
-    case "DELETE":
-      return state.filter((t) => t.id !== action.payload);
-
     default:
       return state;
   }
 }
 
-// -------------------------------------------------------
+// -----------------------------
+// VALIDACIONES REGEX
+// -----------------------------
+const REGEX = {
+  dni: /^[0-9]{7,10}$/,
+  nombre: /^[A-Za-zÁÉÍÓÚÑáéíóúñ ]{3,40}$/,
+  telefono: /^[0-9]{6,15}$/,
+  email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+};
 
 export default function Shifts() {
   const [form, dispatchForm] = useReducer(formReducer, initialForm);
-  const [turnos, dispatchList] = useReducer(listReducer, initialList);
+  const [reservas, dispatchReservas] = useReducer(listReducer, []);
+  const [openModal, setOpenModal] = useState(false);
+  const [modo, setModo] = useState("add");
 
-  // Horarios 9 a 22
   const horariosDisponibles = Array.from({ length: 14 }, (_, i) => {
     const h = 9 + i;
     return `${h.toString().padStart(2, "0")}:00`;
   });
 
-  // -------------------------------------------------------
-  // CARGAR TURNOS (GET)
-  // -------------------------------------------------------
-  const fetchTurnos = async () => {
-    try {
-      const res = await fetch(API);
-      const data = await res.json();
-      dispatchList({ type: "SET_LIST", payload: data });
-    } catch (err) {
-      console.error("❌ Error al cargar turnos:", err);
-    }
-  };
+  // -----------------------------
+  // CARGAR RESERVAS
+  // -----------------------------
+   // -----------------------------
+  // CARGAR RESERVAS COMPLETAS (CIUDADANO + TURNO)
+  // -----------------------------
+  const fetchReservas = async () => {
+  try {
+    const res = await fetch(API.reservas);
+    const data = await res.json();
+
+    const completas = data.map((r) => ({
+      id: r.id,
+      dni: r.ciudadanos.dni,
+      nombre: r.ciudadanos.nombre,
+      telefono: r.ciudadanos.telefono,
+      email: r.ciudadanos.email,
+      fecha: r.turnos.fecha,
+      hora: r.turnos.hora,
+      ciudadano_id: r.ciudadano_id,
+      turno_id: r.turno_id,
+    }));
+
+    dispatchReservas({ type: "SET_LIST", payload: completas });
+  } catch (err) {
+    console.error("❌ Error al cargar reservas:", err);
+  }
+};
 
   useEffect(() => {
-    fetchTurnos();
+    fetchReservas();
   }, []);
 
-  // -------------------------------------------------------
-  // CREAR TURNO (POST)
-  // -------------------------------------------------------
-  const reservarTurno = async () => {
-    if (!form.dni || !form.fecha || !form.horario) {
-      alert("Completa todos los campos.");
-      return;
+  const horariosOcupados = reservas
+    .filter((r) => r.fecha === form.fecha)
+    .map((r) => r.hora);
+
+  // -----------------------------
+  // ABRIR MODAL PARA EDITAR
+  // -----------------------------
+  const abrirEditar = (r) => {
+    dispatchForm({
+      type: "LOAD",
+      data: {
+        id: r.id,
+        dni: r.dni,
+        nombre: r.nombre,
+        telefono: r.telefono,
+        email: r.email,
+        fecha: r.fecha,
+        horario: r.hora,
+      },
+    });
+
+    setModo("edit");
+    setOpenModal(true);
+  };
+
+  // -----------------------------
+  // VALIDAR FORMULARIO
+  // -----------------------------
+  const validarCampos = () => {
+    if (!REGEX.dni.test(form.dni)) return "DNI inválido.";
+    if (!REGEX.nombre.test(form.nombre)) return "Nombre inválido.";
+    if (!REGEX.telefono.test(form.telefono)) return "Teléfono inválido.";
+    if (!REGEX.email.test(form.email)) return "Email inválido.";
+    if (!form.fecha) return "Selecciona una fecha.";
+    if (!form.horario) return "Selecciona un horario.";
+
+    return null;
+  };
+
+  // -----------------------------
+  // GUARDAR (CREATE O UPDATE)
+  // -----------------------------
+  const guardarTurno = async () => {
+  const error = validarCampos();
+  if (error) {
+    alert(error);
+    return;
+  }
+
+  try {
+    let turnoData;
+
+    if (modo === "add") {
+      // ✅ CREAR TURNO SOLO SI ES NUEVO
+      const turnoReq = await fetch(API.turnos, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fecha: form.fecha,
+          hora: form.horario,
+        }),
+      });
+
+      if (turnoReq.status === 409) {
+        alert("❌ Este turno ya está reservado.");
+        return;
+      }
+
+      turnoData = await turnoReq.json();
+    } else {
+      // ✅ ACTUALIZAR TURNO EXISTENTE
+      const reservaActual = reservas.find((r) => r.id === form.id);
+
+      const turnoReq = await fetch(
+        `${API.turnos}/${reservaActual.turno_id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            fecha: form.fecha,
+            hora: form.horario,
+          }),
+        }
+      );
+
+      turnoData = await turnoReq.json();
     }
 
-    const payload = { ...form };
+    // ✅ BUSCAR O CREAR CIUDADANO
+    let c = await fetch(`${API.ciudadanos}/${form.dni}`);
+    let ciudadanoData = await c.json();
 
-    try {
-      const res = await fetch(API, {
+    if (!c.ok) {
+      const nuevoC = await fetch(API.ciudadanos, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          dni: form.dni,
+          nombre: form.nombre,
+          telefono: form.telefono,
+          email: form.email,
+        }),
+      });
+
+      ciudadanoData = await nuevoC.json();
+    }
+
+    // ✅ ACTUALIZAR RESERVA SOLO SI CAMBIA EL CIUDADANO
+    const payload = {
+      ciudadano_id: ciudadanoData.id,
+      turno_id: turnoData.id,
+    };
+
+    if (modo === "add") {
+      await fetch(API.reservas, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-
-      const newTurno = await res.json();
-
-      dispatchList({ type: "ADD", payload: newTurno });
-      dispatchForm({ type: "RESET" });
-
-      alert("Turno reservado con éxito");
-    } catch (err) {
-      console.error("❌ Error en POST:", err);
-    }
-  };
-
-  // -------------------------------------------------------
-  // ACTUALIZAR TURNO (PUT)
-  // -------------------------------------------------------
-  const actualizarTurno = async (id, payload) => {
-    try {
-      const res = await fetch(`${API}/${id}`, {
+    } else {
+      await fetch(`${API.reservas}/${form.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-
-      if (!res.ok) throw new Error("Error al actualizar turno");
-
-      const updated = await res.json();
-
-      dispatchList({ type: "UPDATE", payload: updated });
-    } catch (err) {
-      console.error("❌ Error actualizando:", err);
     }
+
+    fetchReservas();
+    dispatchForm({ type: "RESET" });
+    setOpenModal(false);
+
+    alert(modo === "add" ? "Turno reservado." : "Turno actualizado.");
+  } catch (err) {
+    console.error("❌ Error:", err);
+  }
+};
+
+
+  const abrirAgregar = () => {
+    dispatchForm({ type: "RESET" });
+    setModo("add");
+    setOpenModal(true);
   };
 
-  // -------------------------------------------------------
-  // BORRAR TURNO (DELETE)
-  // -------------------------------------------------------
-  const borrarTurno = async (id) => {
-    try {
-      const res = await fetch(`${API}/${id}`, {
-        method: "DELETE",
-      });
+ const eliminarReserva = async (id) => {
+  if (!confirm("¿Seguro que deseas eliminar este turno?")) return;
 
-      if (!res.ok) throw new Error("Error al borrar turno");
+  try {
+    // ✅ 1. Eliminar SOLO la reserva
+    await fetch(`${API.reservas}/${id}`, { method: "DELETE" });
 
-      dispatchList({ type: "DELETE", payload: id });
-    } catch (err) {
-      console.error("❌ Error en DELETE:", err);
-    }
-  };
+    // ✅ 2. Recargar datos
+    fetchReservas();
+  } catch (err) {
+    console.error("❌ Error al eliminar:", err);
+  }
+};
 
-  // -------------------------------------------------------
+
+
+
+  // -----------------------------
   // RENDER
-  // -------------------------------------------------------
+  // -----------------------------
   return (
     <div className="shift-container">
       <h2 className="shift-title">Sistema de Turnos</h2>
 
-      {/* DNI */}
-      <label className="label">DNI:</label>
-      <input
-        type="number"
-        value={form.dni}
-        onChange={(e) =>
-          dispatchForm({ type: "SET_DNI", value: e.target.value })
-        }
-        className="input"
-        placeholder="Ingresa DNI"
-      />
-
-      {/* Fecha */}
-      <label className="label">Fecha:</label>
-      <input
-        type="date"
-        value={form.fecha}
-        onChange={(e) =>
-          dispatchForm({ type: "SET_FECHA", value: e.target.value })
-        }
-        className="input"
-      />
-
-      {/* Horario */}
-      <label className="label">Horario:</label>
-      <select
-        value={form.horario}
-        onChange={(e) =>
-          dispatchForm({ type: "SET_HORARIO", value: e.target.value })
-        }
-        className="input_turnos"
-      >
-        <option value="">Seleccionar horario</option>
-        {horariosDisponibles.map((h) => (
-          <option key={h} value={h}>
-            {h}
-          </option>
-        ))}
-      </select>
-
-      <button className="button" onClick={reservarTurno}>
-        Reservar turno
+      <button className="button" onClick={abrirAgregar}>
+        ➕ Nuevo Turno
       </button>
 
-      {/* LISTA DE TURNOS */}
-      <h3 className="shift-subtitle">Turnos Reservados</h3>
+      {openModal && (
+        <div className="modal-overlay">
+          <div className="modal-box">
+            <h3>{modo === "add" ? "Nuevo Turno" : "Editar Turno"}</h3>
 
-      <ul className="shift-list">
-        {turnos.length === 0 && <p>No hay turnos cargados.</p>}
+            <label>DNI:</label>
+            <input
+              type="text"
+              value={form.dni}
+              onChange={(e) =>
+                dispatchForm({ type: "SET", field: "dni", value: e.target.value })
+              }
+            />
 
-        {turnos.map((t) => (
-          <li key={t.id} className="shift-item">
-            <span>
-              <strong>DNI:</strong> {t.dni} | <strong>Fecha:</strong> {t.fecha} |{" "}
-              <strong>Horario:</strong> {t.horario}
-            </span>
+            <label>Nombre:</label>
+            <input
+              type="text"
+              value={form.nombre}
+              onChange={(e) =>
+                dispatchForm({ type: "SET", field: "nombre", value: e.target.value })
+              }
+            />
 
-            <button
-              className="btn-edit"
-              onClick={() =>
-                actualizarTurno(t.id, {
-                  dni: t.dni,
-                  fecha: t.fecha,
-                  horario: t.horario,
-                })
+            <label>Teléfono:</label>
+            <input
+              type="text"
+              value={form.telefono}
+              onChange={(e) =>
+                dispatchForm({ type: "SET", field: "telefono", value: e.target.value })
+              }
+            />
+
+            <label>Email:</label>
+            <input
+              type="email"
+              value={form.email}
+              onChange={(e) =>
+                dispatchForm({ type: "SET", field: "email", value: e.target.value })
+              }
+            />
+
+            <label>Fecha:</label>
+            <input
+              type="date"
+              value={form.fecha}
+              onChange={(e) =>
+                dispatchForm({ type: "SET", field: "fecha", value: e.target.value })
+              }
+            />
+
+            <label>Horario:</label>
+            <select
+              value={form.horario}
+              onChange={(e) =>
+                dispatchForm({ type: "SET", field: "horario", value: e.target.value })
               }
             >
-              Editar
+              <option value="">Seleccionar</option>
+
+              {horariosDisponibles.map((h) => {
+                const ocupado =
+                  modo === "add"
+                    ? horariosOcupados.includes(h)
+                    : horariosOcupados.includes(h) && h !== form.horario;
+
+                return (
+                  <option key={h} value={h} disabled={ocupado}>
+                    {h} {ocupado ? "(Ocupado)" : ""}
+                  </option>
+                );
+              })}
+            </select>
+
+            <div className="modal-actions">
+              <button className="btn-save" onClick={guardarTurno}>
+                {modo === "add" ? "Guardar" : "Actualizar"}
+              </button>
+              <button className="btn-cancel" onClick={() => setOpenModal(false)}>
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <h3 className="shift-subtitle">Reservas</h3>
+
+      <ul className="shift-list">
+        {reservas.length === 0 && <p>No hay reservas.</p>}
+
+        {reservas.map((r) => (
+          <li key={r.id} className="shift-item">
+            <strong>DNI:</strong> {r.dni} |
+            <strong> Nombre:</strong> {r.nombre} |
+            <strong> Teléfono:</strong> {r.telefono} |
+            <strong> Email:</strong> {r.email} |
+            <strong> Fecha:</strong> {r.fecha} |
+            <strong> Hora:</strong> {r.hora}
+            <br />
+
+            <button onClick={() => abrirEditar(r)} className="btn-edit">
+              ✏ Editar
             </button>
 
-            <button className="btn-delete" onClick={() => borrarTurno(t.id)}>
-              Borrar
+            <button onClick={() => eliminarReserva(r.id)} className="btn-delete">
+              ❌ Eliminar
             </button>
           </li>
         ))}

@@ -1,5 +1,8 @@
+/* ----------------------------- */
+/* CONTENEDOR PRINCIPAL */
+/* ----------------------------- */
 .shift-container {
-  width: 480px;              /* MÁS GRANDE */
+  width: 480px;
   margin: 60px auto;
   display: flex;
   flex-direction: column;
@@ -16,40 +19,144 @@
   font-size: 2rem;
   margin-bottom: 10px;
   font-weight: 700;
-  color: #ffff;
+  color: #ffffff;
 }
 
-.label {
-  font-weight: 600;
-  font-size: 16px;
-  color: #111;          /* MÁS OSCURO PARA QUE SE VEA */
+.shift-subtitle {
+  color: #fff;
+  font-size: 20px;
+  margin-top: 25px;
 }
 
-.input_turnos {
-  padding: 14px;
-  font-size: 17px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  width: 100%;
+/* ----------------------------- */
+/* LISTA PROFESIONAL */
+/* ----------------------------- */
+/* ----------------------------- */
+/* LISTA DE RESERVAS (PROFESIONAL + SCROLL) */
+/* ----------------------------- */
+
+.shift-list {
+  max-height: 260px;        /* → SCROLL AL SUPERAR 3 TURNOS */
+  overflow-y: auto;
+  padding-right: 6px;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Barra de scroll bonita */
+.shift-list::-webkit-scrollbar {
+  width: 6px;
+}
+.shift-list::-webkit-scrollbar-thumb {
+  background: #3a4a6a;
+  border-radius: 8px;
+}
+
+.shift-item {
+  background: #151d2e;
+  padding: 15px 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #fff;
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+}
+
+/* Datos alineados */
+.shift-data {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px 12px;
+  font-size: 15px;
+}
+
+.shift-data strong {
+  color: #7fc4ff;
+  font-weight: 700;
+}
+
+/* Botones */
+.shift-actions {
+  margin-top: 6px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn-edit {
+  background: #1d7df6;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
   transition: 0.2s;
-  background: #0b1220 !important;
-  color: #ffffff !important;          /* texto visible */
-} 
-
-.option{
-    color: #111;
+}
+.btn-edit:hover {
+  background: #0d5fbf;
 }
 
-.input::placeholder {
-  color: #ffffff !important;          /* placeholder visible */
+.btn-delete {
+  background: #d33;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+.btn-delete:hover {
+  background: #b22;
 }
 
-.input:focus {
+
+/* ----------------------------- */
+/* CAMPOS */
+/* ----------------------------- */
+label {
+  font-weight: 600;
+  font-size: 15px;
+  color: #ffffff;
+}
+
+input,
+select {
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid #666;
+  width: 100%;
+  background: #141b2c !important;
+  color: #ffffff !important;
+  transition: 0.2s;
+}
+
+input::placeholder {
+  color: #cfcfcf !important;
+}
+
+input:focus,
+select:focus {
   outline: none;
-  border-color: #007bff;
-  box-shadow: 0px 0px 6px rgba(0, 123, 255, 0.4);
+  border-color: #00aaff;
+  box-shadow: 0px 0px 6px rgba(0, 170, 255, 0.5);
 }
 
+select option {
+  color: #111;
+  font-weight: 600;
+}
+
+/* ----------------------------- */
+/* BOTÓN PRINCIPAL */
+/* ----------------------------- */
 .button {
   padding: 15px;
   margin-top: 8px;
@@ -68,3 +175,80 @@
   transform: scale(1.03);
 }
 
+/* ----------------------------- */
+/* MODAL OSCURO PROFESIONAL */
+/* ----------------------------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-box {
+  background: #111a29;
+  padding: 25px;
+  width: 420px;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.15);
+  animation: fade .2s ease-out;
+}
+
+.modal-box h3 {
+  color: #ffffff;
+  text-align: center;
+  font-size: 22px;
+}
+
+/* ----------------------------- */
+/* BOTONES DEL MODAL */
+/* ----------------------------- */
+.modal-actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.btn-save {
+  background: #18A558;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: .2s;
+}
+
+.btn-save:hover {
+  background: #128347;
+}
+
+.btn-cancel {
+  background: #d33;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: .2s;
+}
+
+.btn-cancel:hover {
+  background: #b22;
+}
+
+/* ANIMACIÓN */
+@keyframes fade {
+  from { opacity: 0; transform: scale(.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
