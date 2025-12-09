@@ -1,11 +1,13 @@
 import React from 'react'
 import "../styles/servicios.css";
 import  foto2  from"../assets/images/foto2.jpg"
+import { Link } from "react-router-dom";
 
 
 const Services = () => {
 
   return (
+
   <div>
     
     <div className="page">
@@ -133,7 +135,11 @@ const Services = () => {
              aria-label="Contactar por WhatsApp">Solicitar presupuesto
           </a> 
           
-          <a className="btn secondary"  href="/services/paquetes" aria-hidden="true">Ver paquetes</a>
+          
+          <Link className="btn secondary" to="/services/paquetes">
+            Ver paquetes
+          </Link> 
+
         </div>
 
       </section>
