@@ -95,7 +95,6 @@ const Projects = () => {
                 <h3>{proyecto.titulo}</h3>
                 <p>{proyecto.descripcion}</p>
 
-                <button className="project-button">Ver ejemplo →</button>
               </div>
             </a>
           ))}

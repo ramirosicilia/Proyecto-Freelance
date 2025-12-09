@@ -42,6 +42,7 @@
 .projects-grid {
   margin-top: 70px;
   display: grid;
+  padding: 1rem 3rem;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 40px;
 }
@@ -106,23 +107,7 @@
 
 /* ---- Botón -> Estético, enfocado en Ventas ---- */
 
-.project-button {
-  margin-top: 16px;
-  background: linear-gradient(135deg, #59a0ff, #3cffd0);
-  border: none;
-  border-radius: 30px;
-  padding: 12px 24px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #02071a;
-  cursor: pointer;
-  transition: 0.3s ease;
-}
 
-.project-button:hover {
-  transform: translateX(8px);
-  box-shadow: 0 0 25px rgba(60, 255, 208, 0.8);
-}
 
 /* ---- RESPONSIVE ---- */
 
