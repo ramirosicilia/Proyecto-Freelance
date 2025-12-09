@@ -26,7 +26,7 @@ const Header = () => {
           <h1 className="titulo">Desarrollador Web: Ramiro Sicilia</h1>
 
           <span className={visible ? "aparecer" : "ocultar"}>
-            Pedime un turno para un mejor asesoramiento! clickea en turnos
+            Pedime un turno para un asesoramiento personalizado! clickea en turnos
           </span>
         </div>
 

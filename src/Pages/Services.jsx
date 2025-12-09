@@ -3,7 +3,6 @@ import "../styles/servicios.css";
 import  foto2  from"../assets/images/foto2.jpg"
 
 
-
 const Services = () => {
 
   return (
@@ -128,14 +127,22 @@ const Services = () => {
         </div>
 
         <div className="cta-buttons">
-          <a className="btn" href="#contacto">Solicitar presupuesto</a>
-          <a className="btn secondary" href="#paquetes" aria-hidden="true">Ver paquetes</a>
+           <a className="btn" href="https://wa.me/541138774224?text=Hola%20%E2%9C%85%20Quisiera%20un%20presupuesto%20para%20mi%20Web"
+             target="_blank"
+             rel="noopener noreferrer"
+             aria-label="Contactar por WhatsApp">Solicitar presupuesto
+          </a> 
+          
+          <a className="btn secondary"  href="/services/paquetes" aria-hidden="true">Ver paquetes</a>
         </div>
 
       </section>
 
-    </div>
-  </div>
+    </div> 
+ 
+  </div> 
+
+      
 );
 
 

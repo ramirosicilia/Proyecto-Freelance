@@ -6,6 +6,7 @@ import Services from "../Pages/Services";
 import Shifts from "../Pages/Shifts";
 import Contact from "../Pages/Contact";
 import Projects from "../Pages/Projects";
+import { Paquetes } from '../Pages/Paquetes';
 
 
 
@@ -14,19 +15,22 @@ const RouterApp = () => {
   return (
     <> 
 
-        <Routes>
+          <Routes>
+
             <Route path='/' element={<Layout/>}>
-            
             <Route path='services' element={<Services/>}></Route>
             <Route path='shifts' element={<Shifts/>}></Route>
             <Route path='projects' element={<Projects/>}></Route>
-            <Route path='contact' element={<Contact/>}></Route>
-            </Route>
+            <Route path='contact' element={<Contact/>}></Route> 
+
+             <Route path='services/paquetes'element={<Paquetes/>}></Route>
+            </Route> 
+
 
            
 
-        </Routes>
-      
+           </Routes>
+       
     </>
   );
 }

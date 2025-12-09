@@ -146,8 +146,8 @@ const URLBack=import.meta.env.VITE_URL
 
         <div className="contacto-info">
           <h4 className="info-title">Contacto directo</h4>
-          <p className="info-text">Tel: +54 9 XX XXXX XXXX</p>
-          <p className="info-text">Email: hola@tudominio.com</p>
+          <p className="info-text">Tel: +54 11-3877-4224</p>
+          <p className="info-text">Email: rama.sicilia@gmail.com</p>
 
           <div className="horario-box">
             <strong className="horario-title">Horarios</strong>
@@ -155,25 +155,27 @@ const URLBack=import.meta.env.VITE_URL
           </div>
         </div>
 
-      </div>
+      </div> 
+
     </section>
 
     <footer className="footer">
       <div>
         © <strong>Ramiro Sicilia / Agencia</strong> — Desarrollo web & e-commerce
       </div>
-      <div className="footer-love">Hecho con ❤️</div>
+
     </footer>
 
     <a
       className="whatsapp-btn"
-      href="https://wa.me/WHATSAPP_PHONE?text=Hola%20%E2%9C%85%20Quisiera%20un%20presupuesto%20para%20mi%20ecommerce"
+      href="https://wa.me/541138774224?text=Hola%20%E2%9C%85%20Quisiera%20un%20presupuesto%20para%20mi%20Web"
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Contactar por WhatsApp"
     >
       Contactar
     </a>
+
 
   </div>
 );
