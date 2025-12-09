@@ -97,4 +97,98 @@
   font-size: 0.85rem;
   font-weight: 700;
   border-radius: 12px;
+} 
+
+
+
+
+
+
+
+@media (max-width: 1200px) {
+  .paquetes-grid { max-width: 1000px; gap: 25px; }
+  .paquete-card { padding: 28px; }
+}
+
+
+/* =============================== */
+/*  LG — ≥ 992px                   */
+/* =============================== */
+@media (max-width: 992px) {
+  .paquetes-title { font-size: 2.4rem; }
+
+  .paquetes-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+
+  .paquete-card h3 { font-size: 1.35rem; }
+}
+
+
+/* =============================== */
+/*  MD — ≥ 768px (tablets)         */
+/* =============================== */
+@media (max-width: 768px) {
+  .paquetes-section { padding: 60px 20px; }
+
+  .paquetes-title { font-size: 2.2rem; }
+  .paquetes-subtitle { font-size: 1.1rem; }
+
+  .paquete-card { padding: 22px; }
+  .paquete-price { font-size: 1.7rem; }
+}
+
+
+/* =============================== */
+/*  SM — ≥ 576px (celulares grandes)*/
+/* =============================== */
+@media (max-width: 576px) {
+  .paquetes-title { font-size: 2rem; }
+
+  .paquetes-grid {
+    grid-template-columns: 1fr; /* UNA SOLA COLUMNA */
+    gap: 20px;
+  }
+
+  .paquete-card { padding: 20px; }
+  .btn-select { padding: 10px; font-size: 0.95rem; }
+}
+
+
+/* =============================== */
+/*  XS — ≤ 450px (iPhone 14, 13...) */
+/* =============================== */
+@media (max-width: 450px) {
+  .paquetes-section { padding: 50px 15px; }
+
+  .paquetes-title { font-size: 1.7rem; }
+  .paquetes-subtitle { font-size: 0.95rem; }
+
+  .paquete-card {
+    padding: 18px;
+    border-radius: 14px;
+  }
+
+  .paquete-price { font-size: 1.5rem; }
+
+  .badge {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    top: -10px;
+    right: -10px;
+  }
+}
+
+
+/* =============================== */
+/*  XXS — ≤ 380px (celulares chicos) */
+/* =============================== */
+@media (max-width: 380px) {
+  .paquetes-title { font-size: 1.6rem; }
+  .paquete-card {
+    padding: 16px;
+  }
+  .paquete-card ul li { font-size: 0.85rem; }
+  .paquete-price { font-size: 1.35rem; }
+  .btn-select { font-size: 0.9rem; }
 }
