@@ -13,7 +13,9 @@ import {ScrollToTop} from "../Components/ScrollToTop"
 
 
 const RouterApp = () => {
+
   return (
+    
     <> 
          <ScrollToTop/> 
          
@@ -24,7 +26,7 @@ const RouterApp = () => {
             <Route path='shifts' element={<Shifts/>}></Route>
             <Route path='projects' element={<Projects/>}></Route>
             <Route path='contact' element={<Contact/>}></Route> 
-             <Route path='services/paquetes'element={<Paquetes/>}></Route>
+            <Route path='services/paquetes'element={<Paquetes/>}></Route>
             </Route> 
 
 
